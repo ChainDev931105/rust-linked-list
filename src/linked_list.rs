@@ -1,4 +1,3 @@
-use std::fmt;
 use std::mem;
 
 pub struct LinkedList<T> {
@@ -61,6 +60,23 @@ impl<T> LinkedList<T> {
 
     pub fn iter(&mut self) -> NodeIterator<T> {
         self.head.iter()
+    }
+
+    pub fn to_array(&mut self) -> Vec<&T> {
+        let mut arr: Vec<&T> = Vec::with_capacity(self.len as usize);
+        let mut cursor: &Node<T> = &self.head;
+        let mut next_exist: bool = true;
+        while next_exist {
+            arr.push(&cursor.data);
+            next_exist = match cursor.next {
+                Some(ref next) => {
+                    cursor = &next;
+                    true
+                }
+                None => { false }
+            }
+        }
+        arr
     }
 }
 
